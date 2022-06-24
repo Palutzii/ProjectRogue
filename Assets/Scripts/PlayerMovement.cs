@@ -5,9 +5,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour{
+    
     public float speed;
 
+    Animator _animator;
     Vector2 direction;
+
+    void Awake(){
+        _animator = GetComponent<Animator>();
+    }
 
     void Update(){
         TakeInput();
@@ -16,6 +22,7 @@ public class PlayerMovement : MonoBehaviour{
 
     void Move(){
         transform.Translate(direction * (speed * Time.deltaTime));
+        SetAnimatorMovement(direction);
     }
 
     void TakeInput(){
@@ -37,4 +44,10 @@ public class PlayerMovement : MonoBehaviour{
             direction += Vector2.right;
         }
     }
+
+    void SetAnimatorMovement(Vector2 direction){
+        _animator.SetFloat("xDir", direction.x);
+        _animator.SetFloat("yDir", direction.y);
+    }
 }
+
